@@ -25,26 +25,28 @@ class WinScreen(QWidget):
 
         if winner_name == "AI":
             pixmap = QPixmap("../Resources/Images/images.jpg")
-        elif winner_name == "Gelijkspel":
+            result_text = "AI heeft gewonnen!"
+        elif winner_name == "Tie":
             pixmap = QPixmap("../Resources/Images/download.jpg")
-        else:
+            result_text = "Het is een gelijkspel!"
+        elif winner_name == "Player":
             pixmap = QPixmap("../Resources/Images/img_1.png")
+            result_text = "Jij hebt gewonnen!"
+        else:
+            pixmap = QPixmap()
+            result_text = "Onbekende uitkomst"
 
         if not pixmap.isNull():
             scaled_pixmap = pixmap.scaled(300, 300, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             self.image_label.setPixmap(scaled_pixmap)
 
-        winner_label = QLabel(f"Resultaat: {winner_name} is the winner!")
+        winner_label = QLabel(result_text)
         winner_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(winner_label)
 
         self.restart_btn = QPushButton("Opnieuw spelen")
         self.restart_btn.clicked.connect(self.handle_restart)
         layout.addWidget(self.restart_btn)
-
-    def handle_restart(self):
-        self.restart_signal.emit()
-        self.close()
 
     def handle_restart(self):
         self.restart_signal.emit()
