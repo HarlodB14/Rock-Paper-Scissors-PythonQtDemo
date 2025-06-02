@@ -1,3 +1,5 @@
+import random
+
 from model.Game import Game
 from model.Move import Move
 from model.Player import Player
@@ -21,3 +23,22 @@ class Gamecontroller:
     def set_player_move(self, move):
         if self.game.player:
             self.game.player.move = move
+
+    def get_player_move(self):
+        return self.game.player.move
+
+    def get_ai_move(self):
+        return random.choice(self.moves.get_moves())
+
+    def determine_winner(self, player_move, ai_move):
+        rules = {
+            "Rock": "Scissors",
+            "Paper": "Rock",
+            "Scissors": "Paper"
+        }
+        if player_move == ai_move:
+            return "tie"
+        elif rules[player_move] == ai_move:
+            return "player"
+        else:
+            return "ai"
